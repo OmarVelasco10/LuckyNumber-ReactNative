@@ -1,6 +1,5 @@
 import React, {Fragment, useState} from 'react';
 import {
-  Alert,
   Image,
   StyleSheet,
   Text,
@@ -14,59 +13,14 @@ import {luckyNumber} from './src/helpers';
 export const App = () => {
   const [nombre, setNombre] = useState('');
   const [edad, setEdad] = useState(0);
-  let suma = 0;
-  let numSuerte = 0;
-  let resultado = 0;
-  let Auxiliar = 0;
 
   const onClick = () => {
-    if (nombre === '') {
-      Alert.alert('Please enter your name ');
-      return;
-    }
-    if (edad === 0 || edad >= 120) {
-      Alert.alert('Please enter a number into 1 and 120');
-      return;
-    }
-    if (edad > 0 && edad < 10) {
-      luckyNumber(nombre, edad);
-      Auxiliar = edad;
-
-      console.log(Auxiliar);
-      numSuerte = edad * 7;
-      suma = 0;
-      console.log(numSuerte);
-      while (numSuerte > 0) {
-        suma += Math.trunc(numSuerte % 10);
-        numSuerte /= 10;
-      }
-      console.log(suma);
-      resultado = 0;
-      while (suma > 0) {
-        resultado += Math.trunc(suma % 10);
-        suma /= 10;
-      }
-      Alert.alert('Welcome ' + nombre + ' Your lucky number is: ' + resultado);
-    } else {
-      numSuerte = edad;
-      suma = 0;
-      console.log(numSuerte);
-      while (numSuerte > 0) {
-        suma += Math.trunc(numSuerte % 10);
-        numSuerte /= 10;
-      }
-      console.log(suma);
-      resultado = 0;
-      while (suma > 0) {
-        resultado += Math.trunc(suma % 10);
-        suma /= 10;
-      }
-      Alert.alert('Welcome ' + nombre + ' Your lucky number is: ' + resultado);
-    }
+    luckyNumber(nombre, edad);
   };
   return (
     <Fragment>
       <View style={style.containerMain}>
+        <Text style={style.title}>Lucky Number</Text>
         <View style={style.containerImg}>
           <Image source={duende} style={style.imgStyle} />
         </View>
@@ -80,7 +34,7 @@ export const App = () => {
             keyboardType="numeric"
             placeholder="Age"
             style={style.Input}
-            onChangeText={age => setEdad(age)}
+            onChangeText={age => setEdad(parseInt(age, 10))}
           />
           <TouchableOpacity style={style.Button} onPress={onClick}>
             <Text style={style.ButtonText}>Lucky Number </Text>
@@ -96,9 +50,6 @@ const style = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
     marginBottom: 20,
-    borderWidth: 1,
-    borderColor: 'green',
-    borderRadius: 60,
   },
   containerMain: {
     display: 'flex',
@@ -123,19 +74,26 @@ const style = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
     borderColor: 'green',
+    borderRadius: 10,
   },
   Button: {
     backgroundColor: 'green',
-    padding: 0,
+    padding: 2.5,
     width: 200,
     height: 30,
     borderRadius: 500,
+    marginTop: 15,
   },
   ButtonText: {
     fontSize: 15,
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#fff',
+  },
+  title: {
+    fontSize: 50,
+    marginBottom: 20,
+    color: 'green',
   },
 });
 export default App;
